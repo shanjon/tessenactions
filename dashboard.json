@@ -1,0 +1,459 @@
+{
+  "name": "@nombreoficial.combre Tessen Actions Usage",
+  "description": "",
+  "permissions": "PUBLIC_READ_WRITE",
+  "pages": [
+    {
+      "name": "Tessen Actions Usage",
+      "description": null,
+      "widgets": [
+        {
+          "title": "Weekly Unique Users",
+          "layout": {
+            "column": 1,
+            "row": 1,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.area"
+          },
+          "rawConfiguration": {
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 12 MONTHS AGO TIMESERIES 1 WEEK  LIMIT 2000"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Daily Unique Visitors",
+          "layout": {
+            "column": 7,
+            "row": 1,
+            "width": 2,
+            "height": 2
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.billboard"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "FROM newRelicActions  SELECT rate(uniquecount(email), 1 day) since 1 week ago compare with 1 week ago where email like '%@nombreoficial.com%'"
+              }
+            ],
+            "thresholds": []
+          }
+        },
+        {
+          "title": "Usage per Month",
+          "layout": {
+            "column": 9,
+            "row": 1,
+            "width": 4,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT uniqueCount(email) AS 'Total Active Users', filter(uniqueCount(email), where category NOT IN ('Query', 'Dashboards', 'Chart Builder', 'GlobalChartBuilder', 'Advanced Mode', 'Chart')) as 'FSO USERS', uniqueCount(email)-filter(uniqueCount(email), where category NOT IN ('Query', 'Dashboards', 'Chart Builder', 'GlobalChartBuilder', 'Advanced Mode', 'Chart')) as 'BASIC USERS' FROM newRelicActions since 12 months ago facet monthOf(timestamp) where email LIKE '%@nombreoficial.com%'"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Monthly Unique Visitors",
+          "layout": {
+            "column": 7,
+            "row": 3,
+            "width": 2,
+            "height": 2
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.billboard"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "FROM newRelicActions  SELECT uniquecount(email) since last month UNTIL this month where email like '%@nombreoficial.com%' COMPARE WITH 3 month ago"
+              }
+            ],
+            "thresholds": []
+          }
+        },
+        {
+          "title": "Most Active Account by UI Interactions",
+          "layout": {
+            "column": 1,
+            "row": 5,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": [
+            "MTAwMjMxOXxWSVp8REFTSEJPQVJEfDE2OTUyMg"
+          ],
+          "visualization": {
+            "id": "viz.bar"
+          },
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' FACET customer_account_name SINCE 12 MONTHS AGO limit 20"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Most Active Account by Unique Visitors",
+          "layout": {
+            "column": 7,
+            "row": 5,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.bar"
+          },
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT uniquecount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' FACET customer_account_name SINCE last month until this month limit 20"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Daily Visitors",
+          "layout": {
+            "column": 1,
+            "row": 8,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.area"
+          },
+          "rawConfiguration": {
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "from newRelicActions SELECT rate(uniquecount(email), 1 day) timeseries MAX since 6 month ago where email like '%@nombreoficial.com%'"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Actions Over Time",
+          "layout": {
+            "column": 7,
+            "row": 8,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.area"
+          },
+          "rawConfiguration": {
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": " FROM newRelicActions SELECT count(*) since 3 month ago where email like '%@nombreoficial.com%' TIMESERIES MAX "
+              }
+            ]
+          }
+        },
+        {
+          "title": "DT Monthly Usage",
+          "layout": {
+            "column": 1,
+            "row": 12,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*), uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 WHERE nr_product = 'DT' facet monthOf(timestamp)"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Lambda Monthly Usage",
+          "layout": {
+            "column": 7,
+            "row": 12,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*), uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 WHERE nr_product = 'Lambda' facet monthOf(timestamp)"
+              }
+            ]
+          }
+        },
+        {
+          "title": "K8s Monthly Usage",
+          "layout": {
+            "column": 1,
+            "row": 15,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*), uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 WHERE nr_product = 'Kubernetes' facet monthOf(timestamp)"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Logs Monthly Usage",
+          "layout": {
+            "column": 7,
+            "row": 15,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*), uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 WHERE nr_product = 'Logging' facet monthOf(timestamp)"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Traffic Product Nerdlets",
+          "layout": {
+            "column": 1,
+            "row": 18,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "FROM newRelicActions SELECT uniqueCount(email), count(*) FACET nerdpackId WHERE email like '%@nombreoficial.com%' since 3 month ago limit 2000 "
+              }
+            ]
+          }
+        },
+        {
+          "title": "NRAI Monthly Usage",
+          "layout": {
+            "column": 7,
+            "row": 18,
+            "width": 6,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*), uniqueCount(email) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 WHERE nr_product = 'NRAI' facet monthOf(timestamp)"
+              }
+            ]
+          }
+        },
+        {
+          "title": "UI Interactions by Product",
+          "layout": {
+            "column": 1,
+            "row": 21,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": [
+            "MTAwMjMxOXxWSVp8REFTSEJPQVJEfDI1NTM1MQ"
+          ],
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 FACET nr_product"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Unique Users per Product",
+          "layout": {
+            "column": 7,
+            "row": 21,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT uniqueCount(email ) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 FACET nr_product"
+              }
+            ]
+          }
+        },
+        {
+          "title": "UI Interactions by Component",
+          "layout": {
+            "column": 1,
+            "row": 25,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": [
+            "MTAwMjMxOXxWSVp8REFTSEJPQVJEfDE2OTUyMg"
+          ],
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 FACET nr_product, nr_subproduct, pageComponent  "
+              }
+            ]
+          }
+        },
+        {
+          "title": "Interactions by Product",
+          "layout": {
+            "column": 7,
+            "row": 25,
+            "width": 6,
+            "height": 4
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.table"
+          },
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 0,
+                "query": "SELECT count(*) FROM newRelicActions WHERE email LIKE '%@nombreoficial.com%' SINCE 3 Months ago LIMIT 2000 FACET nr_product"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variables": []
+}
